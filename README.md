@@ -180,6 +180,7 @@ ActiveRecord::Base.establish_connection(:development)
 
 ## Changelog
 
+* v5.0.0.pd.1: Drop support for Ruby <2 and fix Rails inverse (pagerduty#1)
 * v4.0.0: Rename gem from Slavery to Standby
 * v3.0.0: Support for multiple standby targets ([@punchh](https://github.com/punchh))
 * v2.1.0: Debug log support / Database URL support / Rails 3.2 & 4.0 compatibility (Thanks to [@citrus](https://github.com/citrus))
