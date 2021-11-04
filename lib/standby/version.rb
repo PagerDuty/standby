@@ -1,3 +1,3 @@
 module Standby
-  VERSION = '4.0.0'
+  VERSION = '5.0.0.pd.1'
 end
