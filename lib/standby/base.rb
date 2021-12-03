@@ -1,7 +1,7 @@
 module Standby
   class Base
-    def initialize(target)
-      @target = decide_with(target)
+    def initialize(target, allow_replica_read_in_transaction = false)
+      @target = decide_with(target, allow_replica_read_in_transaction)
     end
 
     def run(&block)
@@ -10,11 +10,9 @@ module Standby
 
   private
 
-    def decide_with(target)
-      if Standby.disabled || target == :primary
+    def decide_with(target, allow_replica_read_in_transaction)
+      if Standby.disabled || target == :primary || (!allow_replica_read_in_transaction && inside_transaction?)
         :primary
-      elsif inside_transaction?
-        raise Standby::Error.new('on_standby cannot be used inside transaction block!')
       elsif target == :null_state
         :standby
       elsif target.present?

@@ -45,9 +45,15 @@ describe Standby do
     end
   end
 
-  it 'raises error in transaction' do
+  it 'redirects to primary in transaction' do
     User.transaction do
-      expect { Standby.on_standby { User.first } }.to raise_error(Standby::Error)
+      expect { Standby.on_standby { expect(standby_value).to be :primary } }
+    end
+  end
+
+  it 'allows standby use in transaction' do
+    User.transaction do
+      expect { Standby.on_standby(allow_replica_read_in_transaction: true) { expect(standby_value).to be :standby } }
     end
   end
 
