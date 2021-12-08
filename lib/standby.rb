@@ -17,9 +17,9 @@ module Standby
       @standby_connections ||= {}
     end
 
-    def on_standby(name = :null_state, &block)
+    def on_standby(name = :null_state, allow_replica_read_in_transaction: false, &block)
       raise Standby::Error.new('invalid standby target') unless name.is_a?(Symbol)
-      Base.new(name).run &block
+      Base.new(name, allow_replica_read_in_transaction).run &block
     end
 
     def on_primary(&block)
