@@ -87,6 +87,17 @@ Alternatively, you may call `on_standby` directly on the scope, so that the quer
 User.on_standby.where(active: true).count
 ```
 
+### Reading replicas inside of transactions
+
+Reading from replicas while inside of a transaction is now supported and will no longer raise an exception. It does have to bee explicit though. If the flag isn't set when reading from a replica while in a transaction, the query will be run on the primary instead.
+
+```ruby
+ApplicationRecord.transaction do
+  Standby.on_standby(:two) { User.count } # runs on primary
+  Standby.on_standby(:two, allow_replica_read_in_transaction: true) { User.count } # runs on standby configured as `development_standby_two`
+end
+```
+
 Caveat: `pluck` is not supported by the scope syntax, you still need `Standby.on_standby` in this case.
 
 ## Read-only user
@@ -180,6 +191,7 @@ ActiveRecord::Base.establish_connection(:development)
 
 ## Changelog
 
+* v6.0.0.pd.1: Allow explicit reads from replica while in a transaction on the primary
 * v5.0.0.pd.1: Drop support for Ruby <2 and fix Rails inverse (pagerduty#1)
 * v4.0.0: Rename gem from Slavery to Standby
 * v3.0.0: Support for multiple standby targets ([@punchh](https://github.com/punchh))
