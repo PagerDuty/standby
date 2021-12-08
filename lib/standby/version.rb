@@ -1,5 +1,5 @@
 module Standby
-  VERSION = '5.0.0.pd.2'
+  VERSION = '6.0.0.pd.2'
 
   class << self
     def version_gte?(version)
