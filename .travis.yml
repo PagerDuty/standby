@@ -4,6 +4,8 @@ matrix:
   include:
   - rvm: ruby-head
     gemfile: Gemfile
+  - rvm: 2.6
+    gemfile: gemfiles/rails6.1.gemfile
   - rvm: 2.5
     gemfile: gemfiles/rails5.2.gemfile
   - rvm: 2.5
