@@ -2,4 +2,4 @@ source "https://rubygems.org"
 
 gemspec name: 'standby', path: '../'
 
-gem 'activerecord', '~> 5.2'
+gem 'activerecord', '~> 7.0'
